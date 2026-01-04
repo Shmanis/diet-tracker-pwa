@@ -1,75 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Fat Loss Tracker</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="app">
 
-  <header>
-    <h1 id="pageTitle">Today</h1>
-  </header>
-
-  <main>
-    <!-- TODAY -->
-    <section id="todayView" class="view active">
-      <div class="card">
-        <p><strong>Calories Burned:</strong> <span id="burned">0</span></p>
-        <p><strong>Calories Consumed:</strong> <span id="consumed">0</span></p>
-        <p><strong>Net Calories:</strong> <span id="net">0</span></p>
+    <header class="header">
+      <div class="header-left">
+        <button id="menuBtn" class="icon-btn" aria-label="menu">☰</button>
       </div>
-    </section>
-
-    <!-- EXERCISE -->
-    <section id="exerciseView" class="view">
-      <div class="card">
-        <h2>Cardio</h2>
-        <label>
-          <input type="checkbox" id="cardioDone" />
-          Cardio Done
-        </label>
-
-        <select id="cardioMinutes">
-          <option value="30">30 min</option>
-          <option value="35">35 min</option>
-          <option value="40">40 min</option>
-        </select>
+      <div class="header-center">
+        <div id="headerDate">Today</div>
+        <div id="headerStatus" class="status-badge">—</div>
       </div>
+      <div class="header-right"></div>
+    </header>
 
-      <div class="card">
-        <h2>Strength</h2>
+    <main id="main">
+      <!-- TODAY -->
+      <section id="todayView" class="view active">
+        <div class="card summary-card">
+          <div class="row">
+            <div>
+              <div class="label">Calories Burned</div>
+              <div id="burned" class="big">0</div>
+            </div>
+            <div>
+              <div class="label">Calories Consumed</div>
+              <div id="consumed" class="big">0</div>
+            </div>
+            <div>
+              <div class="label">Net Calories</div>
+              <div id="net" class="big">0</div>
+            </div>
+          </div>
+          <div class="progress-row">
+            <div class="label">Exercise Completion</div>
+            <div id="progressText">0 / 0</div>
+          </div>
+        </div>
 
-        <select id="workoutType">
-          <option value="">Select Workout</option>
-          <option value="A">Workout A</option>
-          <option value="B">Workout B</option>
-        </select>
+        <div class="card quick-card">
+          <div class="row between">
+            <div>
+              <div class="label">Water (L)</div>
+              <div class="small-controls">
+                <button id="waterDec" class="small">−</button>
+                <span id="waterVal">0.0</span>
+                <button id="waterInc" class="small">+</button>
+              </div>
+            </div>
+            <div>
+              <div class="label">Sleep (hrs)</div>
+              <input id="sleepVal" type="number" min="0" max="12" step="0.5" style="width:64px" />
+            </div>
+          </div>
+        </div>
 
-        <div id="exerciseList"></div>
+        <div class="card actions-card">
+          <button class="full" onclick="showView('exercise')">Open Exercise</button>
+          <button class="full" onclick="showView('food')">Open Food</button>
+          <button class="full" onclick="showView('calendar')">Open Calendar</button>
+        </div>
+      </section>
+
+      <!-- EXERCISE -->
+      <section id="exerciseView" class="view">
+        <div class="card">
+          <h2>Cardio</h2>
+          <label class="row"><input id="cardioDone" type="checkbox"> Cardio Done</label>
+          <div class="row">
+            <label for="cardioMinutes" class="label">Minutes</label>
+            <select id="cardioMinutes">
+              <option value="30">30</option>
+              <option value="35">35</option>
+              <option value="40">40</option>
+            </select>
+            <label class="row"><input id="cardioIntervals" type="checkbox"> Intervals (+10%)</label>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Strength</h2>
+          <label for="workoutType" class="label">Select workout</label>
+          <select id="workoutType">
+            <option value="">-- choose --</option>
+            <option value="A">Workout A (Mon/Fri)</option>
+            <option value="B">Workout B (Wed/Sat)</option>
+          </select>
+
+          <div id="exerciseList" class="exercise-list"></div>
+        </div>
+      </section>
+
+      <!-- FOOD -->
+      <section id="foodView" class="view">
+        <div class="card">
+          <h2>Food — Select items</h2>
+          <div id="foodMeals"></div>
+        </div>
+        <div class="card">
+          <h3>Overrides</h3>
+          <div id="overrideList"></div>
+          <button onclick="openAddOverride()">Add Override</button>
+        </div>
+      </section>
+
+      <!-- CALENDAR -->
+      <section id="calendarView" class="view">
+        <div class="card">
+          <div id="calendar"></div>
+        </div>
+        <div class="card" id="dayDetails" style="display:none"></div>
+      </section>
+
+    </main>
+
+    <nav class="nav">
+      <button onclick="showView('today')">Today</button>
+      <button onclick="showView('exercise')">Exercise</button>
+      <button onclick="showView('food')">Food</button>
+      <button onclick="showView('calendar')">Calendar</button>
+    </nav>
+
+    <!-- Simple modal for override input -->
+    <div id="modal" class="modal" aria-hidden="true">
+      <div class="modal-content">
+        <h3>Add Override</h3>
+        <label>Item name<input id="ovName"/></label>
+        <label>Calories<input id="ovCals" type="number" value="100"/></label>
+        <label>Reason<input id="ovReason"/></label>
+        <div class="row right">
+          <button onclick="closeModal()">Cancel</button>
+          <button onclick="saveOverride()">Save</button>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <!-- FOOD (placeholder) -->
-    <section id="foodView" class="view">
-      <p>Food tracker coming next.</p>
-    </section>
+  </div>
 
-    <!-- CALENDAR (placeholder) -->
-    <section id="calendarView" class="view">
-      <p>Calendar coming next.</p>
-    </section>
-  </main>
-
-  <nav>
-    <button onclick="showView('today')">Today</button>
-    <button onclick="showView('exercise')">Exercise</button>
-    <button onclick="showView('food')">Food</button>
-    <button onclick="showView('calendar')">Calendar</button>
-  </nav>
-
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
