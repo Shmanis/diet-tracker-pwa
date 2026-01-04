@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diet & Exercise Tracker</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>🍎 Diet & Exercise Tracker</h1>
+
+  <section>
+    <h2>Add Food</h2>
+    <input id="foodName" placeholder="Food name" />
+    <input id="foodCalories" type="number" placeholder="Calories" />
+    <button onclick="addFood()">Add Food</button>
+  </section>
+
+  <section>
+    <h2>Add Exercise</h2>
+    <input id="exerciseName" placeholder="Exercise name" />
+    <input id="exerciseCalories" type="number" placeholder="Calories burned" />
+    <button onclick="addExercise()">Add Exercise</button>
+  </section>
+
+  <section>
+    <h2>Today Summary</h2>
+    <p id="summary"></p>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
