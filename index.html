@@ -3,31 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Diet & Exercise Tracker</title>
+  <title>Fat Loss Tracker</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>🍎 Diet & Exercise Tracker</h1>
 
-  <section>
-    <h2>Add Food</h2>
-    <input id="foodName" placeholder="Food name" />
-    <input id="foodCalories" type="number" placeholder="Calories" />
-    <button onclick="addFood()">Add Food</button>
-  </section>
+  <header>
+    <h1 id="pageTitle">Today</h1>
+  </header>
 
-  <section>
-    <h2>Add Exercise</h2>
-    <input id="exerciseName" placeholder="Exercise name" />
-    <input id="exerciseCalories" type="number" placeholder="Calories burned" />
-    <button onclick="addExercise()">Add Exercise</button>
-  </section>
+  <main>
+    <!-- TODAY -->
+    <section id="todayView" class="view active">
+      <div class="card">
+        <p><strong>Calories Burned:</strong> <span id="burned">0</span></p>
+        <p><strong>Calories Consumed:</strong> <span id="consumed">0</span></p>
+        <p><strong>Net Calories:</strong> <span id="net">0</span></p>
+      </div>
+    </section>
 
-  <section>
-    <h2>Today Summary</h2>
-    <p id="summary"></p>
-  </section>
+    <!-- EXERCISE -->
+    <section id="exerciseView" class="view">
+      <div class="card">
+        <h2>Cardio</h2>
+        <label>
+          <input type="checkbox" id="cardioDone" />
+          Cardio Done
+        </label>
+
+        <select id="cardioMinutes">
+          <option value="30">30 min</option>
+          <option value="35">35 min</option>
+          <option value="40">40 min</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <h2>Strength</h2>
+
+        <select id="workoutType">
+          <option value="">Select Workout</option>
+          <option value="A">Workout A</option>
+          <option value="B">Workout B</option>
+        </select>
+
+        <div id="exerciseList"></div>
+      </div>
+    </section>
+
+    <!-- FOOD (placeholder) -->
+    <section id="foodView" class="view">
+      <p>Food tracker coming next.</p>
+    </section>
+
+    <!-- CALENDAR (placeholder) -->
+    <section id="calendarView" class="view">
+      <p>Calendar coming next.</p>
+    </section>
+  </main>
+
+  <nav>
+    <button onclick="showView('today')">Today</button>
+    <button onclick="showView('exercise')">Exercise</button>
+    <button onclick="showView('food')">Food</button>
+    <button onclick="showView('calendar')">Calendar</button>
+  </nav>
 
   <script src="app.js"></script>
 </body>
